@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentAnimation = null;
 
     const messageToHighlight = "WHEN YOU DO NOT KNOW WHAT TO DO YOU SHOULD TRY SOMETHING";
+    const messageWords = messageToHighlight.split(' ');
     let messageIndices = [];
 
     function initializeCanvas() {
@@ -27,15 +28,45 @@ document.addEventListener('DOMContentLoaded', () => {
     function findMessageLetters() {
         const text = siteText.toUpperCase();
         let foundIndices = [];
+        let currentSearchStart = 0;
 
-        for (let letter of messageToHighlight) {
-            if (letter === ' ') continue;
+        // Calculate word positions
+        const lineHeight = 20; // Increased line height
+        const indentSize = 50; // Increased indent size
+        let y = lineHeight * 3; // Start a few lines down
+        let wordGroup = 0;
+
+        ctx.font = '14px Arial'; // Larger font for message
+
+        for (let i = 0; i < messageWords.length; i++) {
+            const word = messageWords[i];
+            const wordIndex = i % 5; // Reset every 5 words
+            const x = (wordIndex * indentSize) + 20; // More left padding
+
+            // Find each letter in the word
+            for (let j = 0; j < word.length; j++) {
+                const letter = word[j];
+                if (letter === ' ') continue;
+
+                const index = text.indexOf(letter, currentSearchStart);
+                if (index !== -1) {
+                    foundIndices.push({
+                        index,
+                        x: x + (j * 8), // Wider letter spacing
+                        y: y,
+                        isMessage: true
+                    });
+                    currentSearchStart = index + 1;
+                }
+            }
+
+            // Move to next line
+            y += lineHeight;
             
-            const startSearchFrom = foundIndices.length > 0 ? foundIndices[foundIndices.length - 1] + 1 : 0;
-            const index = text.indexOf(letter, startSearchFrom);
-            
-            if (index !== -1) {
-                foundIndices.push(index);
+            // Reset position after every 5 words
+            if ((i + 1) % 5 === 0) {
+                y += lineHeight * 1.5; // More space between groups
+                wordGroup++;
             }
         }
 
@@ -55,30 +86,47 @@ document.addEventListener('DOMContentLoaded', () => {
         let x = 5;
         let y = lineHeight;
 
+        // Find message letters with their positions
         messageIndices = findMessageLetters();
 
+        // Create a map of indices to positions for message letters
+        const messagePositions = new Map();
+        messageIndices.forEach(({index, x, y, isMessage}) => {
+            messagePositions.set(index, {x, y, isMessage});
+        });
+
+        // Draw all text
         for (let i = 0; i < text.length; i++) {
             const char = text[i];
             const metrics = ctx.measureText(char);
             const charWidth = metrics.width;
 
+            // Handle line wrapping
             if (x + charWidth > canvas.width - 10) {
                 x = 5;
                 y += lineHeight;
             }
 
+            // Store letter position
             if (!letterPositions.has(char.toLowerCase())) {
                 letterPositions.set(char.toLowerCase(), []);
             }
-            letterPositions.get(char.toLowerCase()).push({ x, y, char });
 
-            if (messageIndices.includes(i)) {
+            // If this is a message letter, use its pre-calculated position
+            if (messagePositions.has(i)) {
+                const pos = messagePositions.get(i);
+                letterPositions.get(char.toLowerCase()).push({ x: pos.x, y: pos.y, char });
+                
                 ctx.save();
+                if (pos.isMessage) {
+                    ctx.font = '14px Arial'; // Larger font for message
+                }
                 ctx.fillStyle = 'white';
-                ctx.fillText(char, x, y);
+                ctx.fillText(char, pos.x, pos.y);
                 ctx.restore();
-                highlightedPositions.add(`${x},${y}`);
+                highlightedPositions.add(`${pos.x},${pos.y}`);
             } else {
+                letterPositions.get(char.toLowerCase()).push({ x, y, char });
                 ctx.fillText(char, x, y);
             }
             
@@ -111,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         let index = 0;
-        let delay = 300; // Start slower
+        let delay = 300;
         let lastTime = 0;
         let timeSinceLastHighlight = 0;
         let acceleration = 1.0;
@@ -131,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 index++;
                 timeSinceLastHighlight = 0;
                 
-                // Accelerate more aggressively
                 acceleration += 0.2;
                 delay = Math.max(10, 300 / acceleration);
             }
