@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trump Administration Power Network</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100vh;
+    }
+    .header {
+      background-color: white;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+    }
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      margin-right: 4px;
+    }
+    .legend-label {
+      font-size: 12px;
+    }
+    .visualization {
+      position: relative;
+      flex-grow: 1;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+    .tooltip {
+      position: absolute;
+      background-color: white;
+      padding: 8px;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      border: 1px solid #eee;
+      font-size: 14px;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .tooltip-name {
+      font-weight: bold;
+    }
+    .tooltip-role {
+      color: #666;
+    }
+    .tooltip-group {
+      color: #888;
+      font-size: 12px;
+    }
+    .footer {
+      background-color: white;
+      padding: 16px;
+      margin-top: 16px;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+    .footer-title {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .key-points {
+      font-size: 14px;
+      list-style-type: disc;
+      padding-left: 20px;
+      margin: 4px 0;
+    }
+    .key-points li {
+      margin-bottom: 4px;
+    }
+    .key-point-label {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">Trump Administration Power Network</div>
+      <div class="subtitle">Visualization of power relationships between Signal group members, tech networks, and government entities</div>
+      <div class="legend" id="legend"></div>
+    </div>
+    
+    <div class="visualization">
+      <svg id="network"></svg>
+      <div class="tooltip" id="tooltip"></div>
+    </div>
+    
+    <div class="footer">
+      <div class="footer-title">Key Power Dynamics</div>
+      <ul class="key-points">
+        <li><span class="key-point-label">Thiel Network Influence:</span> Two key Signal members (JD Vance, Jacob Helberg) have direct connections to Peter Thiel</li>
+        <li><span class="key-point-label">Defense Tech Dominance:</span> Palantir, Anduril, and SpaceX have secured billions in government contracts</li>
+        <li><span class="key-point-label">Competing Power Centers:</span> Tensions exist between Susie Wiles (Trump loyalist) and Elon Musk (tech influence)</li>
+        <li><span class="key-point-label">Informal Governance:</span> The Signal chat represents how official channels are bypassed for direct communication</li>
+        <li><span class="key-point-label">Financial Interests:</span> Palantir's stock increased 90% after Trump's election victory</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Node types and their colors
+      const nodeTypes = {
+        signalGroup: "#E57373", // Red
+        thielNetwork: "#81C784", // Green
+        muskNetwork: "#64B5F6", // Blue
+        trumpLoyalist: "#FFD54F", // Yellow
+        defenseTech: "#9575CD", // Purple
+        thinkTank: "#4DD0E1", // Teal
+        government: "#A1887F", // Brown
+        company: "#90A4AE", // Gray
+        other: "#BDBDBD" // Light Gray
+      };
+
+      // Define the network data
+      const graphData = {
+        nodes: [
+          // Key Individuals in Signal Group Chat
+          { id: "Michael Waltz", label: "Michael Waltz", group: "Signal Chat", role: "National Security Advisor", type: "signalGroup", size: 25 },
+          { id: "Scott Bessent", label: "Scott Bessent", group: "Signal Chat", role: "Treasury Secretary", type: "signalGroup", size: 20 },
+          { id: "Walker Barrett", label: "Walker Barrett", group: "Signal Chat", role: "NSC Defense Director", type: "signalGroup", size: 20 },
+          { id: "Brian McCormack", label: "Brian McCormack", group: "Signal Chat", role: "Chief of Staff to Waltz", type: "signalGroup", size: 20 },
+          { id: "Pete Hegseth", label: "Pete Hegseth", group: "Signal Chat", role: "Secretary of Defense", type: "signalGroup", size: 25 },
+          { id: "Jacob Helberg", label: "Jacob Helberg", group: "Signal Chat", role: "Under Secretary of State nominee", type: "signalGroup", size: 25 },
+          { id: "Dan Katz", label: "Dan Katz", group: "Signal Chat", role: "Treasury Chief of Staff", type: "signalGroup", size: 20 },
+          { id: "Joe Kent", label: "Joe Kent", group: "Signal Chat", role: "Acting Chief of Staff to Gabbard", type: "signalGroup", size: 20 },
+          { id: "Stephen Miller", label: "Stephen Miller", group: "Signal Chat", role: "Deputy Chief of Staff for Policy", type: "signalGroup", size: 25 },
+          { id: "Mike Needham", label: "Mike Needham", group: "Signal Chat", role: "Chief of Staff to Rubio", type: "signalGroup", size: 20 },
+          { id: "John Ratcliffe", label: "John Ratcliffe", group: "Signal Chat", role: "CIA Director", type: "signalGroup", size: 25 },
+          { id: "Susie Wiles", label: "Susie Wiles", group: "Signal Chat", role: "White House Chief of Staff", type: "signalGroup", size: 25 },
+          { id: "Tulsi Gabbard", label: "Tulsi Gabbard", group: "Signal Chat", role: "Director of National Intelligence", type: "signalGroup", size: 25 },
+          { id: "JD Vance", label: "JD Vance", group: "Signal Chat", role: "Vice President", type: "signalGroup", size: 30 },
+          { id: "Steve Witkoff", label: "Steve Witkoff", group: "Signal Chat", role: "Special Envoy for Middle East", type: "signalGroup", size: 20 },
+          { id: "Alex Wong", label: "Alex Wong", group: "Signal Chat", role: "Deputy to Waltz", type: "signalGroup", size: 20 },
+          { id: "Marco Rubio", label: "Marco Rubio", group: "Signal Chat", role: "Secretary of State", type: "signalGroup", size: 25 },
+          
+          // Key Tech Leaders & Funders
+          { id: "Peter Thiel", label: "Peter Thiel", group: "Tech Leaders", role: "Palantir Co-Founder, Investor", type: "thielNetwork", size: 35 },
+          { id: "Elon Musk", label: "Elon Musk", group: "Tech Leaders", role: "DOGE Director", type: "muskNetwork", size: 35 },
+          { id: "Alex Karp", label: "Alex Karp", group: "Tech Leaders", role: "Palantir CEO", type: "thielNetwork", size: 25 },
+          { id: "Palmer Luckey", label: "Palmer Luckey", group: "Tech Leaders", role: "Anduril Founder", type: "thielNetwork", size: 20 },
+          { id: "Keith Rabois", label: "Keith Rabois", group: "Tech Leaders", role: "Founders Fund Partner, Helberg's Spouse", type: "thielNetwork", size: 20 },
+          { id: "David Sacks", label: "David Sacks", group: "Tech Leaders", role: "AI & Crypto Czar", type: "thielNetwork", size: 25 },
+          { id: "Joe Lonsdale", label: "Joe Lonsdale", group: "Tech Leaders", role: "Palantir Co-Founder", type: "thielNetwork", size: 20 },
+          { id: "Donald Trump", label: "Donald Trump", group: "Administration", role: "President", type: "trumpLoyalist", size: 40 },
+
+          // Companies & Organizations
+          { id: "Palantir", label: "Palantir", group: "Organizations", role: "Defense Tech Company", type: "company", size: 30 },
+          { id: "Anduril", label: "Anduril", group: "Organizations", role: "Defense Tech Company", type: "company", size: 25 },
+          { id: "SpaceX", label: "SpaceX", group: "Organizations", role: "Aerospace Company", type: "company", size: 25 },
+          { id: "Founders Fund", label: "Founders Fund", group: "Organizations", role: "Venture Capital Firm", type: "company", size: 25 },
+          { id: "Mithril Capital", label: "Mithril Capital", group: "Organizations", role: "Venture Capital Firm", type: "company", size: 20 },
+          { id: "Hill and Valley Forum", label: "Hill and Valley Forum", group: "Organizations", role: "Think Tank", type: "thinkTank", size: 20 },
+          { id: "DOGE", label: "DOGE", group: "Organizations", role: "Government Efficiency Initiative", type: "government", size: 25 },
+          { id: "Heritage Foundation", label: "Heritage Foundation", group: "Organizations", role: "Think Tank", type: "thinkTank", size: 20 },
+          { id: "NSC", label: "National Security Council", group: "Organizations", role: "Government Body", type: "government", size: 25 },
+          { id: "CIA", label: "CIA", group: "Organizations", role: "Intelligence Agency", type: "government", size: 25 },
+          { id: "DoD", label: "Department of Defense", group: "Organizations", role: "Government Department", type: "government", size: 25 },
+          { id: "Treasury", label: "Treasury Department", group: "Organizations", role: "Government Department", type: "government", size: 25 },
+          { id: "State", label: "State Department", group: "Organizations", role: "Government Department", type: "government", size: 25 },
+          { id: "White House", label: "White House", group: "Organizations", role: "Executive Branch", type: "government", size: 30 },
+        ],
+        
+        links: [
+          // Signal Group connections to Trump
+          { source: "Donald Trump", target: "Michael Waltz", value: 9, type: "reports_to", label: "Reports to" },
+          { source: "Donald Trump", target: "JD Vance", value: 10, type: "reports_to", label: "VP to" },
+          { source: "Donald Trump", target: "Pete Hegseth", value: 8, type: "reports_to", label: "Reports to" },
+          { source: "Donald Trump", target: "Marco Rubio", value: 8, type: "reports_to", label: "Reports to" },
+          { source: "Donald Trump", target: "Susie Wiles", value: 10, type: "reports_to", label: "Reports to" },
+          { source: "Donald Trump", target: "John Ratcliffe", value: 8, type: "reports_to", label: "Reports to" },
+          { source: "Donald Trump", target: "Tulsi Gabbard", value: 8, type: "reports_to", label: "Reports to" },
+          { source: "Donald Trump", target: "Stephen Miller", value: 9, type: "reports_to", label: "Reports to" },
+          { source: "Donald Trump", target: "Steve Witkoff", value: 8, type: "reports_to", label: "Reports to" },
+          
+          // Signal Group hierarchical connections
+          { source: "Michael Waltz", target: "NSC", value: 5, type: "leads", label: "Leads" },
+          { source: "Michael Waltz", target: "Alex Wong", value: 5, type: "supervises", label: "Supervises" },
+          { source: "Michael Waltz", target: "Brian McCormack", value: 5, type: "supervises", label: "Supervises" },
+          { source: "Michael Waltz", target: "Walker Barrett", value: 4, type: "supervises", label: "Supervises" },
+          { source: "JD Vance", target: "White House", value: 8, type: "part_of", label: "Part of" },
+          { source: "Pete Hegseth", target: "DoD", value: 8, type: "leads", label: "Leads" },
+          { source: "Marco Rubio", target: "State", value: 8, type: "leads", label: "Leads" },
+          { source: "Susie Wiles", target: "White House", value: 8, type: "part_of", label: "Part of" },
+          { source: "Tulsi Gabbard", target: "Joe Kent", value: 5, type: "supervises", label: "Supervises" },
+          { source: "Scott Bessent", target: "Treasury", value: 8, type: "leads", label: "Leads" },
+          { source: "Scott Bessent", target: "Dan Katz", value: 5, type: "supervises", label: "Supervises" },
+          { source: "Marco Rubio", target: "Mike Needham", value: 5, type: "supervises", label: "Supervises" },
+          { source: "John Ratcliffe", target: "CIA", value: 8, type: "leads", label: "Leads" },
+          
+          // Thiel network connections to individuals
+          { source: "Peter Thiel", target: "JD Vance", value: 10, type: "mentors", label: "Mentors/Funded $15M" },
+          { source: "Peter Thiel", target: "Jacob Helberg", value: 8, type: "connected_to", label: "Connected via Palantir" },
+          { source: "Peter Thiel", target: "Keith Rabois", value: 8, type: "partners_with", label: "Partners with" },
+          { source: "Peter Thiel", target: "David Sacks", value: 8, type: "partners_with", label: "Partners with" },
+          { source: "Peter Thiel", target: "Joe Lonsdale", value: 7, type: "partners_with", label: "Co-founded Palantir" },
+          { source: "Peter Thiel", target: "Palmer Luckey", value: 6, type: "invests_in", label: "Invests in" },
+          { source: "Peter Thiel", target: "Alex Karp", value: 9, type: "partners_with", label: "Co-founded Palantir" },
+          { source: "Peter Thiel", target: "Elon Musk", value: 7, type: "partners_with", label: "Former PayPal colleague" },
+          
+          // Thiel connections to organizations
+          { source: "Peter Thiel", target: "Palantir", value: 10, type: "founded", label: "Co-founded" },
+          { source: "Peter Thiel", target: "Anduril", value: 8, type: "invests_in", label: "Invests in" },
+          { source: "Peter Thiel", target: "Founders Fund", value: 10, type: "leads", label: "Leads" },
+          { source: "Peter Thiel", target: "Mithril Capital", value: 9, type: "founded", label: "Founded" },
+          { source: "Peter Thiel", target: "SpaceX", value: 6, type: "invests_in", label: "Invests in" },
+          
+          // Musk connections
+          { source: "Elon Musk", target: "DOGE", value: 10, type: "leads", label: "Leads" },
+          { source: "Elon Musk", target: "SpaceX", value: 10, type: "founded", label: "Founded" },
+          { source: "Elon Musk", target: "Donald Trump", value: 9, type: "advises", label: "Advises" },
+          { source: "Elon Musk", target: "David Sacks", value: 7, type: "partners_with", label: "Former PayPal colleague" },
+          
+          // Other key connections
+          { source: "Alex Karp", target: "Palantir", value: 10, type: "leads", label: "CEO" },
+          { source: "Alex Karp", target: "Jacob Helberg", value: 8, type: "supervises", label: "Supervises" },
+          { source: "Jacob Helberg", target: "Keith Rabois", value: 10, type: "married_to", label: "Married to" },
+          { source: "Jacob Helberg", target: "Hill and Valley Forum", value: 8, type: "founded", label: "Founded" },
+          { source: "Jacob Helberg", target: "State", value: 7, type: "part_of", label: "Nominee" },
+          { source: "Palmer Luckey", target: "Anduril", value: 10, type: "founded", label: "Founded" },
+          { source: "Joe Lonsdale", target: "Palantir", value: 8, type: "founded", label: "Co-founded" },
+          
+          // Defense contracts
+          { source: "Palantir", target: "DoD", value: 8, type: "contracts_with", label: "Contracts with" },
+          { source: "Palantir", target: "CIA", value: 9, type: "contracts_with", label: "Contracts with" },
+          { source: "Anduril", target: "DoD", value: 9, type: "contracts_with", label: "$20B contract" },
+          { source: "SpaceX", target: "DoD", value: 7, type: "contracts_with", label: "Contracts with" },
+          
+          // Think tank connections
+          { source: "Heritage Foundation", target: "Donald Trump", value: 6, type: "influences", label: "Project 2025" },
+          
+          // Signal Group relationships
+          { source: "Michael Waltz", target: "Pete Hegseth", value: 7, type: "collaborates_with", label: "Signal chat" },
+          { source: "Michael Waltz", target: "JD Vance", value: 7, type: "collaborates_with", label: "Signal chat" },
+          { source: "Michael Waltz", target: "John Ratcliffe", value: 7, type: "collaborates_with", label: "Signal chat" },
+          { source: "Michael Waltz", target: "Marco Rubio", value: 7, type: "collaborates_with", label: "Signal chat" },
+          { source: "Michael Waltz", target: "Stephen Miller", value: 6, type: "collaborates_with", label: "Signal chat" },
+          { source: "Michael Waltz", target: "Tulsi Gabbard", value: 6, type: "collaborates_with", label: "Signal chat" },
+          { source: "Michael Waltz", target: "Susie Wiles", value: 6, type: "collaborates_with", label: "Signal chat" },
+          { source: "Michael Waltz", target: "Scott Bessent", value: 6, type: "collaborates_with", label: "Signal chat" },
+          { source: "Michael Waltz", target: "Steve Witkoff", value: 6, type: "collaborates_with", label: "Signal chat" },
+          { source: "Susie Wiles", target: "JD Vance", value: 6, type: "collaborates_with", label: "Signal chat" },
+        ]
+      };
+
+      // Legend data
+      const legendItems = [
+        { label: "Signal Group Member", color: nodeTypes.signalGroup },
+        { label: "Thiel Network", color: nodeTypes.thielNetwork },
+        { label: "Musk Network", color: nodeTypes.muskNetwork },
+        { label: "Trump Loyalist", color: nodeTypes.trumpLoyalist },
+        { label: "Defense Tech Company", color: nodeTypes.company },
+        { label: "Think Tank", color: nodeTypes.thinkTank },
+        { label: "Government Entity", color: nodeTypes.government },
+      ];
+
+      // Create legend
+      const legendContainer = document.getElementById('legend');
+      legendItems.forEach(item => {
+        const legendItem = document.createElement('div');
+        legendItem.className = 'legend-item';
+        
+        const colorBox = document.createElement('div');
+        colorBox.className = 'legend-color';
+        colorBox.style.backgroundColor = item.color;
+        
+        const label = document.createElement('span');
+        label.className = 'legend-label';
+        label.textContent = item.label;
+        
+        legendItem.appendChild(colorBox);
+        legendItem.appendChild(label);
+        legendContainer.appendChild(legendItem);
+      });
+
+      // Get dimensions
+      const getContainerDimensions = () => {
+        const container = document.querySelector('.visualization');
+        return {
+          width: container.clientWidth,
+          height: container.clientHeight
+        };
+      };
+
+      let dimensions = getContainerDimensions();
+
+      // Set up the visualization
+      const svg = d3.select('#network');
+      const tooltip = d3.select('#tooltip');
+
+      // Create the force simulation
+      const simulation = d3.forceSimulation(graphData.nodes)
+        .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(d => 150 - d.value * 5))
+        .force("charge", d3.forceManyBody().strength(-200))
+        .force("center", d3.forceCenter(dimensions.width / 2, dimensions.height / 2))
+        .force("collision", d3.forceCollide().radius(d => (d.size / 5) + 15));
+
+      // Add arrowheads
+      svg.append("defs").selectAll("marker")
+        .data(["end"])
+        .join("marker")
+        .attr("id", "arrow")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 25)
+        .attr("refY", 0)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("fill", "#999")
+        .attr("d", "M0,-5L10,0L0,5");
+
+      // Add links
+      const link = svg.append("g")
+        .selectAll("line")
+        .data(graphData.links)
+        .join("line")
+        .attr("stroke", "#999")
+        .attr("stroke-opacity", 0.6)
+        .attr("stroke-width", d => Math.sqrt(d.value) / 2)
+        .attr("marker-end", "url(#arrow)");
+
+      // Add link labels
+      const linkText = svg.append("g")
+        .selectAll("text")
+        .data(graphData.links)
+        .join("text")
+        .text(d => d.label)
+        .attr("font-size", "8px")
+        .attr("text-anchor", "middle")
+        .attr("fill", "#666")
+        .attr("dy", -5);
+
+      // Add nodes
+      const node = svg.append("g")
+        .selectAll("circle")
+        .data(graphData.nodes)
+        .join("circle")
+        .attr("r", d => d.size / 5)
+        .attr("fill", d => nodeTypes[d.type] || nodeTypes.other)
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 1.5)
+        .on("mouseover", (event, d) => {
+          tooltip.style("opacity", 1)
+            .html(`
+              <div class="tooltip-name">${d.label}</div>
+              <div class="tooltip-role">${d.role}</div>
+              <div class="tooltip-group">${d.group}</div>
+            `)
+            .style("left", `${event.pageX + 10}px`)
+            .style("top", `${event.pageY - 10}px`);
+        })
+        .on("mouseout", () => {
+          tooltip.style("opacity", 0);
+        })
+        .call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
+
+      // Add node labels
+      const nodeLabels = svg.append("g")
+        .selectAll("text")
+        .data(graphData.nodes)
+        .join("text")
+        .text(d => d.label)
+        .attr("font-size", "8px")
+        .attr("text-anchor", "middle")
+        .attr("dy", d => -d.size / 5 - 5);
+
+      // Update positions on simulation tick
+      simulation.on("tick", () => {
+        link
+          .attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
+
+        linkText
+          .attr("x", d => (d.source.x + d.target.x) / 2)
+          .attr("y", d => (d.source.y + d.target.y) / 2);
+
+        node
+          .attr("cx", d => d.x = Math.max(d.size / 5, Math.min(dimensions.width - d.size / 5, d.x)))
+          .attr("cy", d => d.y = Math.max(d.size / 5, Math.min(dimensions.height - d.size / 5, d.y)));
+
+        nodeLabels
+          .attr("x", d => d.x)
+          .attr("y", d => d.y);
+      });
+
+      // Drag functions
+      function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+      }
+
+      function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+      }
+
+      function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+      }
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        dimensions = getContainerDimensions();
+        simulation.force("center", d3.forceCenter(dimensions.width / 2, dimensions.height / 2))
+          .alphaTarget(0.3)
+          .restart();
+      });
+
+      // Initial layout adjustment
+      setTimeout(() => {
+        dimensions = getContainerDimensions();
+        simulation.force("center", d3.forceCenter(dimensions.width / 2, dimensions.height / 2))
+          .alphaTarget(0.3)
+          .restart();
+      }, 100);
+    });
+  </script>
+</body>
+</html>
