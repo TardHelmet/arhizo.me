@@ -90,3 +90,56 @@ body {
         font-size: 48px;
     }
 }
+
+/* Site footer: crawlable product information for The QCOS Online.
+   Kept quiet so it does not compete with the piece, but always present
+   and readable without JavaScript. */
+.site-footer {
+    position: fixed;
+    left: 14px;
+    right: 60px;
+    bottom: 10px;
+    z-index: 4;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.35);
+    max-width: 70ch;
+}
+
+.site-footer__lede {
+    margin-bottom: 4px;
+}
+
+.site-footer strong {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 700;
+}
+
+.site-footer__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.site-footer a {
+    color: rgba(255, 255, 255, 0.45);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+    color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+    .site-footer {
+        right: 14px;
+        bottom: 34px;
+        font-size: 10px;
+    }
+}

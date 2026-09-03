@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — The QCOS Online</title>
+  <meta name="description" content="Privacy Policy for The QCOS Online: what data we collect, including data received through Google Sign-In, how we use it, how long we keep it, and how to delete it.">
+  <link rel="canonical" href="https://arhizo.me/qcos/privacy.html">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='black'/><rect x='6' y='4' width='4' height='8' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="qcos.css">
+</head>
+<body>
+<header class="page-header">
+  <a href="/qcos/" class="site-name">The QCOS Online</a>
+  <nav class="header-nav" aria-label="Site">
+    <a href="/qcos/">About</a>
+    <a href="/qcos/privacy.html" aria-current="page">Privacy</a>
+    <a href="/qcos/terms.html">Terms</a>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode"></button>
+  </nav>
+</header>
+<main>
+  <div class="policy-header">
+    <h1>Privacy Policy</h1>
+    <p class="policy-meta">The QCOS Online &middot; Effective September 3, 2026 &middot; Last updated September 3, 2026</p>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>The short version:</strong> We collect the minimum needed to run an invite-only community: your Google account identifier, email address, and display name; your invitations; your desk's encrypted state; any files you upload to share with a room; purchase and sticker records if you buy anything; and short-lived connection logs. Rooms are end-to-end encrypted and we cannot read them. We never collect voice recordings, video, screen captures, face data, or any biometric. We do not sell data and we do not run advertising or analytics. You can delete your account and its data at any time.</p>
+  </div>
+
+  <nav class="toc" aria-label="Contents">
+    <ol>
+      <li><a href="#who">Who we are</a></li>
+      <li><a href="#collect">Information we collect</a></li>
+      <li><a href="#google">Data received from Google</a></li>
+      <li><a href="#never">What we never collect</a></li>
+      <li><a href="#use">How we use information</a></li>
+      <li><a href="#encryption">Encryption and what we can see</a></li>
+      <li><a href="#share">How we share information</a></li>
+      <li><a href="#retention">Retention</a></li>
+      <li><a href="#delete">Deleting your data</a></li>
+      <li><a href="#rights">Your rights</a></li>
+      <li><a href="#security">Security</a></li>
+      <li><a href="#local">Data stored on your device</a></li>
+      <li><a href="#children">Age requirements</a></li>
+      <li><a href="#transfers">International transfers</a></li>
+      <li><a href="#changes">Changes to this policy</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+  </nav>
+
+  <hr class="divider">
+
+  <div class="policy-section" id="who">
+    <h2>1. Who we are</h2>
+    <p>The QCOS Online (the "Service", the "App") is a desktop application and its supporting online services, developed and operated by Quarantine Collective ("we", "us", "our") in Québec, Canada, and published at <a href="https://arhizo.me/qcos/">arhizo.me/qcos</a>. This policy describes what personal information the Service collects, why it collects it, how it is handled, and what choices you have. It covers the desktop application, the viewer web client, and the account, invitation, and purchase systems behind them.</p>
+    <p>For the purposes of Canada's <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA) and Québec's <em>Act respecting the protection of personal information in the private sector</em> as amended by Law 25, the person responsible for the protection of personal information can be reached at <a href="mailto:b@arhizo.me?subject=QCOS%20privacy">b@arhizo.me</a>.</p>
+  </div>
+
+  <div class="policy-section" id="collect">
+    <h2>2. Information we collect</h2>
+    <p>Information reaches us in four ways: what you provide when you sign in and use the App; what other members generate about you (an invitation, a sticker); what your device must send our servers for the App to function; and records of purchases.</p>
+
+    <h3>2.1 Account and identity</h3>
+    <ul>
+      <li><strong>Google account identifier.</strong> A stable, opaque ID issued by Google, used as the key for your account.</li>
+      <li><strong>Email address.</strong> The address on your Google Account, used to match you to an invitation, to contact you about your account, and to send purchase receipts.</li>
+      <li><strong>Name and profile picture.</strong> Your Google name becomes the default display name, which you can change in the App. A Google profile picture, if present, is used only as an optional avatar and can be removed.</li>
+      <li><strong>Participant ID and display name.</strong> Inside rooms you are represented only by an internal participant ID and your chosen display name. Your email address and legal name are never shown to other members.</li>
+    </ul>
+
+    <h3>2.2 Invitations</h3>
+    <ul>
+      <li>The invitation code you redeemed, who issued it, when it was issued and expires, and the role it grants (broadcaster, guest, or viewer).</li>
+      <li>Invitations you issue to others and whether they have been redeemed. Invitations are traceable to their issuer by design, because vouching for someone carries responsibility here.</li>
+    </ul>
+
+    <h3>2.3 Desk and room data</h3>
+    <ul>
+      <li><strong>Encrypted desk state.</strong> Your desk's layout, object positions, open books and current pages, highlights, bookmarks, and stickers placed on it, stored as encrypted snapshots under a per-room key we do not hold.</li>
+      <li><strong>Encrypted notebooks and annotations,</strong> synchronised as encrypted collaborative documents.</li>
+      <li><strong>Encrypted room events.</strong> Cursor positions, presence, knocks, page turns, and speech that your own device has already turned into text are relayed as encrypted events. Ephemeral events — cursors, presence, knocks — are not persisted at all. Speech, as text, may be retained in a desk's encrypted history where its owner has enabled that.</li>
+      <li><strong>Transparency log.</strong> A hash chain over the encrypted event stream, containing hashes and timestamps of ciphertext blocks rather than readable content. It lets participants later prove what was said and in what order without our being able to read any of it.</li>
+    </ul>
+
+    <h3>2.4 Uploaded files</h3>
+    <ul>
+      <li>Books, documents, media, and sticker artwork you upload to share with a room. These are stored <strong>unencrypted</strong> on our servers, addressed by a hash of their contents, so they can be delivered to the members of your room. They are the one category of your content we can see. See section 6.</li>
+    </ul>
+
+    <h3>2.5 Purchases and the sticker ledger</h3>
+    <ul>
+      <li>If you buy credits or stickers, or make a patronage contribution, we record the transaction — what was bought, when, for how much, the resulting balance — and the stickers you hold, place, trade, or retire.</li>
+      <li>Payments are processed by Stripe. We receive a transaction identifier, the brand and last four digits of the card, the billing country, and the payment status. Full card numbers never reach us.</li>
+      <li>If you sell sticker packs and receive payouts, Stripe collects the identity and tax information the law requires directly from you, under Stripe's own privacy policy.</li>
+    </ul>
+
+    <h3>2.6 Technical and connection data</h3>
+    <ul>
+      <li>IP address, connection timestamps, App version, operating system, and error reports, held in short-lived server logs for operation, debugging, and abuse prevention.</li>
+      <li>We use no third-party analytics, no advertising SDKs, and no behavioural tracking of any kind, in the App or on these pages. These pages set no cookies; the App stores only a session token and your local preferences on your own device.</li>
+    </ul>
+  </div>
+
+  <div class="policy-section" id="google">
+    <h2>3. Data received from Google</h2>
+    <p>The QCOS Online uses Google Sign-In as its identity provider. When you sign in we request the basic OpenID Connect scopes — <code>openid</code>, <code>email</code>, and <code>profile</code> — and through them receive your Google account identifier, your email address and whether it is verified, your name, and a profile picture URL. We do not request access to Gmail, Google Drive, Calendar, Contacts, or any other Google service data, and we have no ability to read them.</p>
+    <p>Information received from Google is used only to create and authenticate your account, match you to an invitation, show a name in rooms, contact you about your account, and send purchase receipts. It is not used for advertising, not sold, and not transferred to anyone except as described in section 7.</p>
+    <p>The QCOS Online's use and transfer of information received from Google APIs to any other app adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, including its Limited Use requirements.</p>
+    <p>You can revoke the App's access to your Google Account at any time from your <a href="https://myaccount.google.com/permissions" rel="noopener">Google Account permissions page</a>. Revoking access signs you out and blocks further sign-in until you grant it again; on its own it does not delete your account with us. For that, see section 9.</p>
+  </div>
+
+  <div class="policy-section" id="never">
+    <h2>4. What we never collect</h2>
+    <p>None of the following is collected, transmitted, or stored by any part of the Service. This is enforced by the architecture rather than by policy alone: the App contains no code path that sends them to us.</p>
+    <ul>
+      <li>Microphone audio or voice recordings. Speech is transcribed to text on your own device; only that text and coarse prosody markers leave it, encrypted, and are re-synthesised as an audibly synthetic voice on each listener's machine.</li>
+      <li>Voiceprints, speaker models, or any voice biometric.</li>
+      <li>Video, webcam frames, or face data.</li>
+      <li>Screen captures or screen recordings.</li>
+      <li>Biometric identifiers of any kind.</li>
+      <li>Plaintext room content on our servers. See section 6.</li>
+      <li>Location data, beyond the country-level inference an IP address in a server log permits.</li>
+      <li>Contacts, files, or browsing activity from your device other than what you explicitly upload.</li>
+    </ul>
+  </div>
+
+  <div class="policy-section" id="use">
+    <h2>5. How we use information</h2>
+    <ul>
+      <li><strong>To provide the Service:</strong> authenticate you, enforce invitations and roles, relay and persist your desk, deliver uploaded files to room members, and process purchases.</li>
+      <li><strong>To keep the community workable:</strong> trace invitations, enforce the interaction budget that rate-limits spam by construction, act on takedown notices for uploaded files, and detect abuse of the relay servers.</li>
+      <li><strong>To communicate with you:</strong> account and security notices, purchase receipts, and replies to your requests. We send no marketing email.</li>
+      <li><strong>To meet legal obligations:</strong> tax and payment record-keeping, copyright notice handling, and responding to lawful requests.</li>
+    </ul>
+    <p>Our basis for this processing is your consent, given when you accept an invitation and sign in, together with what is reasonably necessary to provide a service you asked for and to comply with law. We make no automated decisions about you with legal or similarly significant effects, and we build no profiles of you for any purpose.</p>
+  </div>
+
+  <div class="policy-section" id="encryption">
+    <h2>6. Encryption and what we can see</h2>
+    <p>Rooms are end-to-end encrypted under a per-room key held by their participants. Our relay server orders encrypted events, stamps them with a logical clock, and echoes them onward. It never decrypts them and we do not hold the keys. Stated plainly: <strong>we cannot read your notebooks, your annotations, what you say, or what sits on your desk, and we cannot moderate the inside of a room we host.</strong> Moderation rests with desk owners, who can kick, ban, mute, and hide objects instantly, and with the invitation chain that traces every member to whoever vouched for them.</p>
+    <p>Two things sit deliberately outside that encryption, and you should know which:</p>
+    <ul>
+      <li><strong>Uploaded files</strong> — books, media, sticker art — are stored unencrypted so they can be shared. We can see them, we may scan them by hash against known illegal material, and we will remove them in response to valid notices under the <a href="/qcos/terms.html#content">Terms of Service</a>.</li>
+      <li><strong>Server-authoritative records</strong> — your account, invitations, purchase ledger, sticker holdings — are stored in readable form in our database, because they need an authority that clients cannot be trusted to supply. They are protected by access controls and encryption at rest, not by end-to-end encryption.</li>
+    </ul>
+    <p>Where an AI participant such as the Librarian is present in a room, it joins as a participant under a key granted by the desk owner, on the same footing as a human member. Its presence does not give us server-side access to room contents.</p>
+  </div>
+
+  <div class="policy-section" id="share">
+    <h2>7. How we share information</h2>
+    <p>We do not sell personal information and we share none of it with advertisers or data brokers. Information is shared only in these cases:</p>
+    <ul>
+      <li><strong>With other members, as the Service requires.</strong> Your display name, avatar, cursor, and interactions are visible to the members of rooms you enter. Files you upload are delivered to the members of your room. Who issued your invitation is visible to us and may be visible to desk owners.</li>
+      <li><strong>Service providers.</strong> Google (sign-in), Stripe (payments and creator payouts), and our hosting and content-delivery providers process data on our behalf under their own contractual and privacy commitments, each receiving only what its function requires.</li>
+      <li><strong>Legal requirements.</strong> We will disclose information where a valid court order, subpoena, or other legal process requires it, or where necessary to protect the rights, safety, or property of members, the public, or us. Because rooms are end-to-end encrypted, what we are able to disclose about room contents is limited to encrypted blocks and their hashes.</li>
+      <li><strong>Business transfer.</strong> If the Service passes to a successor operator, your information may transfer with it, under this policy, with notice to you.</li>
+    </ul>
+  </div>
+
+  <div class="policy-section" id="retention">
+    <h2>8. Retention</h2>
+    <ul>
+      <li><strong>Account data:</strong> kept while your account exists; deleted within 30 days of a deletion request.</li>
+      <li><strong>Invitation records:</strong> kept while the issuer's or redeemer's account exists, since they underpin the community's trust model; on account deletion they are retained only in a form that no longer identifies you.</li>
+      <li><strong>Encrypted desk state and room history:</strong> kept while the desk exists; deleted within 30 days of the desk's deletion. The transparency log retains hashes of encrypted blocks indefinitely, and hashes cannot be reversed into content.</li>
+      <li><strong>Uploaded files:</strong> kept while at least one desk references them; deleted within 30 days once none does, or sooner on a valid takedown.</li>
+      <li><strong>Purchase and ledger records:</strong> kept seven years, as Canadian tax and payment law requires, then deleted.</li>
+      <li><strong>Server logs containing IP addresses:</strong> kept no longer than 30 days.</li>
+    </ul>
+  </div>
+
+  <div class="policy-section" id="delete">
+    <h2>9. Deleting your data</h2>
+    <p>To delete your account and its associated data, email <a href="mailto:b@arhizo.me?subject=QCOS%20account%20deletion">b@arhizo.me</a> from the address on your account, or use the account-deletion option in the App where available. We confirm and complete deletion within 30 days, subject only to the exceptions in section 8 (tax records, and de-identified invitation records), and purge it from backups within a further 60 days.</p>
+    <p>You may also revoke the App's access to your Google Account at any time at <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>. Inside the App you can delete individual uploaded files, notebooks, and desk objects whenever you like, and uninstalling the App removes all locally stored data from your device.</p>
+  </div>
+
+  <div class="policy-section" id="rights">
+    <h2>10. Your rights</h2>
+    <p>Wherever you live, you may ask us to access, correct, port, or delete the personal information we hold about you, withdraw your consent, and raise questions or complaints about how we handle it. Residents of Québec have further rights under Law 25, including to be informed of collection and to receive your data in a structured, commonly used technological format. Residents of the European Economic Area and the United Kingdom have the corresponding rights under the GDPR and UK GDPR. Residents of California have rights under the CCPA/CPRA; note that we neither "sell" nor "share" personal information as those terms are defined there.</p>
+    <p>To exercise any of this, email <a href="mailto:b@arhizo.me?subject=QCOS%20privacy%20request">b@arhizo.me</a>; we respond within 30 days. You also have the right to complain to the Office of the Privacy Commissioner of Canada, the Commission d'accès à l'information du Québec, or your local supervisory authority.</p>
+  </div>
+
+  <div class="policy-section" id="security">
+    <h2>11. Security</h2>
+    <p>Room content is protected by end-to-end encryption. Traffic between the App and our servers is protected by TLS. Server-side records are encrypted at rest and access is restricted to the operator. Card data is handled entirely by Stripe, a PCI DSS Level 1 provider. No system is perfectly secure; if we learn of a breach of your personal information presenting a real risk of serious harm, we will notify you and the appropriate authorities as the law requires.</p>
+  </div>
+
+  <div class="policy-section" id="local">
+    <h2>12. Data stored on your device</h2>
+    <p>The App stores locally: your desk and notebooks, so they are available offline; cached copies of uploaded files, fetched once and kept by hash; the speech-recognition and speech-synthesis models it runs on your machine; your voice and display preferences; and a session token. None of it is sent to us except as described above. Uninstalling the App, or deleting its data directory, removes all of it.</p>
+  </div>
+
+  <div class="policy-section" id="children">
+    <h2>13. Age requirements</h2>
+    <p>The QCOS Online is an invite-only community for adults. You must be at least 18, or the age of majority where you live if that is higher, to hold an account. We do not knowingly collect personal information from anyone under 18. If you believe a minor holds an account, contact us and we will remove it.</p>
+  </div>
+
+  <div class="policy-section" id="transfers">
+    <h2>14. International transfers</h2>
+    <p>Our servers are in Canada. Google and Stripe may process data in the United States and elsewhere under their own safeguards. Using the Service from outside Canada means your information is transferred to and processed in Canada, whose privacy laws may differ from those where you live. Where the law requires it, we rely on contractual safeguards for such transfers.</p>
+  </div>
+
+  <div class="policy-section" id="changes">
+    <h2>15. Changes to this policy</h2>
+    <p>Any revised policy is posted at this address with an updated date. Where a change materially expands what we collect or how we use it, we will notify account holders by email or in the App before it takes effect, and will seek your consent again where the law requires that.</p>
+  </div>
+
+  <div class="policy-section" id="contact">
+    <h2>16. Contact</h2>
+    <p>Quarantine Collective<br>Québec, Canada<br>Email: <a href="mailto:b@arhizo.me?subject=QCOS%20privacy">b@arhizo.me</a><br>Web: <a href="https://arhizo.me/qcos/">arhizo.me/qcos</a></p>
+  </div>
+</main>
+<footer>
+  <nav aria-label="Footer">
+    <a href="/qcos/">The QCOS Online</a>
+    <a href="/qcos/privacy.html">Privacy Policy</a>
+    <a href="/qcos/terms.html">Terms of Service</a>
+    <a href="mailto:b@arhizo.me">Contact</a>
+  </nav>
+  <p>&copy; 2026 Quarantine Collective. All rights reserved.</p>
+</footer>
+<script src="theme.js"></script>
+</body>
+</html>

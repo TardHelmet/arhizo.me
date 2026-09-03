@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The QCOS Online</title>
+  <meta name="description" content="The QCOS Online is an invite-only desktop application for reading, note-taking, and quiet study in the company of a small audience. Rooms are end-to-end encrypted. No audio, video, or screen capture is ever transmitted.">
+  <link rel="canonical" href="https://arhizo.me/qcos/">
+  <meta property="og:title" content="The QCOS Online">
+  <meta property="og:description" content="An invite-only desktop application for reading, note-taking, and quiet study in the company of a small audience.">
+  <meta property="og:url" content="https://arhizo.me/qcos/">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='black'/><rect x='6' y='4' width='4' height='8' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="qcos.css">
+</head>
+<body>
+<header class="page-header">
+  <a href="/qcos/" class="site-name">The QCOS Online</a>
+  <nav class="header-nav" aria-label="Legal pages">
+    <a href="/qcos/" aria-current="page">About</a>
+    <a href="/qcos/privacy.html">Privacy Policy</a>
+    <a href="/qcos/terms.html">Terms of Service</a>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode"></button>
+  </nav>
+</header>
+<main>
+  <div class="policy-header">
+    <h1>The QCOS Online</h1>
+    <p class="policy-meta">A desktop application by Quarantine Collective. Published at arhizo.me.</p>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>What it is:</strong> The QCOS Online is an invite-only desktop application in which one person works at a virtual desk, reading, annotating, and taking notes, while a small invited audience watches, reads along, and interacts lightly. It is a place to study in company, not a streaming platform.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="policy-section">
+    <h2>Purpose of the application</h2>
+    <p>The QCOS Online exists so that reading and thinking can be done in the presence of others without being turned into video. A broadcaster opens their desk. The desk holds books, a notebook, a lamp, an inbox, and whatever else they have accumulated. When the lamp is on, invited guests and viewers can see the desk as it is right now: which book is open, which page, what is being written in the notebook, where the owner's attention is.</p>
+    <p>Viewers can point at passages, highlight a line, leave a note in the inbox, knock for attention, or place a sticker. They cannot move the owner's things, speak over them, or take up space. Interactions are deliberately limited and rate-budgeted so that the room stays quiet enough to work in.</p>
+    <p>Everything that reaches a viewer is reconstructed locally from small structured messages. Speech is transcribed to text on the speaker's own machine and re-synthesized as a plainly synthetic voice on the listener's machine. No microphone audio, no video, no screen capture, and no image of a person is ever transmitted or stored. This is a design decision, not a limitation: the application does not claim to carry a faithful signal, and so there is nothing in it to forge or to surveil.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>How access works</h2>
+    <p>The QCOS Online is invite-only. There is no open signup and no public directory. Invitations are issued by existing members and are traceable to the person who issued them. All members must be adults.</p>
+    <p>Members sign in with a Google Account. We use Google Sign-In only to establish who you are and to attach your desk, invitations, and any stickers or credits to a stable identity. The details of what we receive from Google and how we handle it are set out in the <a href="/qcos/privacy.html">Privacy Policy</a>.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>How the application treats your data</h2>
+    <ul>
+      <li><strong>Rooms are end-to-end encrypted.</strong> The relay server that orders and distributes room events cannot decrypt them. The operator cannot read what happens on a desk it hosts.</li>
+      <li><strong>Nothing biometric is collected.</strong> No voice recordings, voiceprints, face data, video, or screen captures exist anywhere in the system.</li>
+      <li><strong>Uploaded files are the exception.</strong> Books, media, and sticker artwork are stored unencrypted on our servers so they can be shared with a room, and are subject to the acceptable-use and takedown rules in the <a href="/qcos/terms.html">Terms of Service</a>.</li>
+      <li><strong>Provenance without surveillance.</strong> Encrypted room events are hash-chained into a transparency log so that participants can later prove what was said and in what order, without the operator ever learning the contents.</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <h2>Platforms and availability</h2>
+    <p>The QCOS Online is a downloadable desktop application for Windows, macOS, and Linux. A viewer-only web client is planned. The application is currently in a closed, invited alpha and is not yet generally available.</p>
+  </div>
+
+  <div class="policy-section">
+    <h2>Who operates it</h2>
+    <p>The QCOS Online is developed and operated by Quarantine Collective, a small independent group based in Québec, Canada, and is published on this domain, arhizo.me. Questions about the application, invitations, or these pages can be sent to <a href="mailto:b@arhizo.me?subject=The%20QCOS%20Online">b@arhizo.me</a>.</p>
+    <div class="link-grid">
+      <a class="link-card" href="/qcos/privacy.html"><strong>Privacy Policy</strong><span>What we collect, why, how long we keep it, and how to delete it.</span></a>
+      <a class="link-card" href="/qcos/terms.html"><strong>Terms of Service</strong><span>The rules for using The QCOS Online, including acceptable use and takedowns.</span></a>
+    </div>
+  </div>
+</main>
+<footer>
+  <nav aria-label="Footer">
+    <a href="/qcos/">The QCOS Online</a>
+    <a href="/qcos/privacy.html">Privacy Policy</a>
+    <a href="/qcos/terms.html">Terms of Service</a>
+    <a href="mailto:b@arhizo.me">Contact</a>
+  </nav>
+  <p>&copy; 2026 Quarantine Collective. All rights reserved.</p>
+</footer>
+<script src="theme.js"></script>
+</body>
+</html>
